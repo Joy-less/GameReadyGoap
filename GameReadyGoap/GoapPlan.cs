@@ -64,14 +64,18 @@ public class GoapPlan {
 
                 // Get heuristic distance to goal
                 double HeuristicDistance = NextStep.EstimateDistance(Goal);
-                if (HeuristicDistance > Settings.Value.MaxHeuristicDistance) {
+                if (HeuristicDistance > Settings.Value.MaxDistanceEstimate) {
                     continue;
                 }
                 double TotalCost = NextStep.Cost + HeuristicDistance;
 
-                // Ignore if there's a cheaper path to this state already
-                if (!StateCosts.TryAdd(NextStep.PredictedStates, TotalCost) && StateCosts[NextStep.PredictedStates] <= TotalCost) {
+                // Skip if there's a cheaper path to this state already
+                if (StateCosts.TryGetValue(NextStep.PredictedStates, out double CurrentCost) && CurrentCost <= TotalCost) {
                     continue;
+                }
+                // Otherwise set as cheapest path
+                else {
+                    StateCosts[NextStep.PredictedStates] = TotalCost;
                 }
 
                 // Enqueue step in order of priority
@@ -96,5 +100,5 @@ public class GoapPlan {
 }
 public struct GoapPlanSettings() {
     public int MaxIterations = 1000;
-    public int MaxHeuristicDistance = 10;
+    public int MaxDistanceEstimate = 10;
 }

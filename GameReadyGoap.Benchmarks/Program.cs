@@ -21,4 +21,19 @@ public class FarmerBenchmark {
             FarmerTest.Agent.FindPlan();
         }
     }
+    [Benchmark]
+    public void FarmerImpossible1000() {
+        GoapGoal ImpossibleGoal = new("ImpossibleGoal") {
+            Objectives = [
+                new GoapCondition() {
+                    State = FarmerState.CropHealth,
+                    Comparison = GoapComparison.EqualTo,
+                    Value = -10,
+                },
+            ],
+        };
+        for (int Counter = 0; Counter < 1000; Counter++) {
+            GoapPlan.Find(FarmerTest.Agent, ImpossibleGoal);
+        }
+    }
 }
