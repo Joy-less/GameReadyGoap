@@ -11,9 +11,9 @@ public class GoapCondition {
     /// </summary>
     public bool BestEffort = false;
     /// <summary>
-    /// Should return a number that's lower when the value is closer to the target. If null, the planner uses 0 when met and 1 when not met.
+    /// Should return a number that's lower when the value is closer to the target. If null, uses 0 if met and 2 if not met.
     /// </summary>
-    public DistanceFunction? Distance = null;
+    public DistanceFunction? EstimateDistance = null;
 
     public bool IsMet(IReadOnlyDictionary<Enum, object?> States) {
         return Comparison.Compare(States.GetValueOrDefault(State), Value.Evaluate(States));

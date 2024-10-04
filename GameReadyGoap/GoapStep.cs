@@ -23,15 +23,15 @@ internal class GoapStep : StablePriorityQueueNode {
         Actions.Reverse();
         return Actions;
     }
-    public double GetDistance(GoapGoal Goal) {
+    public double EstimateDistance(GoapGoal Goal) {
         // Get distance of resultant states to desired states
         double Distance = 0;
         foreach (GoapCondition Objective in Goal.Objectives) {
-            if (Objective.Distance is null) {
-                Distance += Objective.IsMet(PredictedStates) ? 0 : 1;
+            if (Objective.EstimateDistance is null) {
+                Distance += Objective.IsMet(PredictedStates) ? 0 : 2;
             }
             else {
-                Distance += Math.Abs(Objective.Distance(PredictedStates.GetValueOrDefault(Objective.State), Objective.Value.Evaluate(PredictedStates)));
+                Distance += Math.Abs(Objective.EstimateDistance(PredictedStates.GetValueOrDefault(Objective.State), Objective.Value.Evaluate(PredictedStates)));
             }
         }
         return Distance;
