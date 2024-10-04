@@ -30,6 +30,8 @@ public class GoapPlan {
         };
         OpenQueue.Enqueue(FirstStep, 0);
 
+        // Track cost to reach each state
+        Dictionary<Dictionary<Enum, object?>, double> StateCosts = new(new DictionaryComparer<Enum, object?>());
         // Track best step
         GoapStep BestStep = FirstStep;
 
@@ -55,19 +57,25 @@ public class GoapPlan {
             foreach (GoapAction Action in Agent.GetValidActions(BestStep.PredictedStates)) {
                 GoapStep NextStep = new() {
                     Previous = BestStep,
-                    Action = Action, 
+                    Action = Action,
                     PredictedStates = Action.PredictStates(BestStep.PredictedStates),
-                    Cost = Action.Cost(Agent) + (BestStep.Previous is null ? 0 : BestStep.Previous.Cost),
+                    Cost = Action.Cost(Agent) + (BestStep.Previous?.Cost ?? 0),
                 };
 
-                // Probably bad
+                // Get heuristic distance
                 double Distance = NextStep.GetDistance(Goal);
                 if (Distance > Settings.Value.MaxDistance) {
                     continue;
                 }
+                double TotalCost = NextStep.Cost + Distance;
+
+                // Ignore if there's a cheaper path to this state already
+                if (!StateCosts.TryAdd(NextStep.PredictedStates, TotalCost) && StateCosts[NextStep.PredictedStates] <= TotalCost) {
+                    continue;
+                }
 
                 // Enqueue step in order of priority
-                OpenQueue.EnqueueWithoutDuplicates(NextStep, NextStep.Cost + Distance);
+                OpenQueue.EnqueueWithoutDuplicates(NextStep, TotalCost);
             }
         }
 
