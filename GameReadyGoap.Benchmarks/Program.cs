@@ -1,9 +1,18 @@
-namespace GameReadyGoap.Tests;
+﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
+using GameReadyGoap.Tests;
 
-[TestClass]
-public class FarmerTest {
-    [TestMethod]
-    public void Test() {
+namespace GameReadyGoap.Benchmarks;
+
+public static class Program {
+    public static void Main() {
+        BenchmarkRunner.Run<FarmerBenchmark>();
+    }
+}
+
+public class FarmerBenchmark {
+    [Benchmark]
+    public void Farmer1000() {
         GoapAgent Agent = new() {
             States = new() {
                 [FarmerState.IsFarming] = false,
@@ -55,13 +64,8 @@ public class FarmerTest {
                 },
             ],
         };
-        Assert.IsNotNull(Agent.FindPlan());
-        Assert.IsNotNull(GoapPlan.Find(Agent, Agent.Goals[0]));
+        for (int Counter = 0; Counter < 1000; Counter++) {
+            Agent.FindPlan();
+        }
     }
-}
-
-public enum FarmerState {
-    IsFarming,
-    Energy,
-    CropHealth,
 }

@@ -87,6 +87,6 @@ public class GoapPlan {
     }
 }
 public struct GoapPlanSettings() {
-    public int MaxIterations = 50; // 500;
+    public int MaxIterations = 1000;
     public int MaxDistance = 10;
 }
