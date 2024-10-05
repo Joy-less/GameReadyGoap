@@ -5,7 +5,7 @@ namespace GameReadyGoap;
 internal class GoapStep : StablePriorityQueueNode {
     public required GoapStep? Previous;
     public required GoapAction? Action;
-    public required Dictionary<Enum, object?> PredictedStates;
+    public required Dictionary<object, object?> PredictedStates;
     public required double Cost;
 
     /// <summary>

@@ -1,7 +1,7 @@
 namespace GameReadyGoap;
 
 public class GoapCondition {
-    public required Enum State;
+    public required object State;
     public required GoapComparison Comparison;
     public required GoapValue Value;
     /// <summary>
@@ -15,10 +15,10 @@ public class GoapCondition {
     /// </summary>
     public DistanceFunction? EstimateDistance = null;
 
-    public bool IsMet(IReadOnlyDictionary<Enum, object?> States) {
+    public bool IsMet(IReadOnlyDictionary<object, object?> States) {
         return Comparison.Compare(States.GetValueOrDefault(State), Value.Evaluate(States));
     }
-    public bool IsMetOrCloser(IReadOnlyDictionary<Enum, object?> States, IReadOnlyDictionary<Enum, object?> PreviousStates) {
+    public bool IsMetOrCloser(IReadOnlyDictionary<object, object?> States, IReadOnlyDictionary<object, object?> PreviousStates) {
         if (BestEffort) {
             return Comparison.IsMetOrCloser(Value.Evaluate(States), States.GetValueOrDefault(State), PreviousStates.GetValueOrDefault(State));
         }

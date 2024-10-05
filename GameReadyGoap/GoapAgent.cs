@@ -4,17 +4,17 @@ namespace GameReadyGoap;
 
 public class GoapAgent(string? Name = null) {
     public string? Name = Name;
-    public required ConcurrentDictionary<Enum, object?> States = [];
+    public required ConcurrentDictionary<object, object?> States = [];
     public required List<GoapGoal> Goals = [];
     public required List<GoapAction> Actions = [];
 
-    public T GetState<T>(Enum State) {
+    public T GetState<T>(object State) {
         return (T)States.GetValueOrDefault(State)!;
     }
-    public dynamic? GetState(Enum State) {
+    public dynamic? GetState(object State) {
         return States.GetValueOrDefault(State);
     }
-    public void SetState(Enum State, object Value) {
+    public void SetState(object State, object Value) {
         States[State] = Value;
     }
     public IEnumerable<GoapGoal> ChooseGoals() {
@@ -50,7 +50,7 @@ public class GoapAgent(string? Name = null) {
             yield return Action;
         }
     }
-    public IEnumerable<GoapAction> GetValidActions(IReadOnlyDictionary<Enum, object?> States) {
+    public IEnumerable<GoapAction> GetValidActions(IReadOnlyDictionary<object, object?> States) {
         foreach (GoapAction Action in Actions) {
             if (!Action.IsValid(this)) {
                 continue;

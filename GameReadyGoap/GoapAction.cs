@@ -10,8 +10,8 @@ public class GoapAction(string? Name = null) {
     /// <summary>
     /// Gets the predicted states after the action is performed.
     /// </summary>
-    public Dictionary<Enum, object?> PredictStates(IReadOnlyDictionary<Enum, object?> States) {
-        Dictionary<Enum, object?> PredictedStates = States.ToDictionary();
+    public Dictionary<object, object?> PredictStates(IReadOnlyDictionary<object, object?> States) {
+        Dictionary<object, object?> PredictedStates = States.ToDictionary();
         foreach (GoapEffect Effect in Effects) {
             PredictedStates[Effect.State] = Effect.PredictState(PredictedStates);
         }

@@ -9,7 +9,7 @@ public class Program {
     public static void Main() {
         BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run();
 
-        //new FarmerBenchmark().Farmer1000();
+        // new FarmerBenchmark().Farmer1000();
     }
 }
 

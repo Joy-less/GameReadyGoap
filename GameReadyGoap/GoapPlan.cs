@@ -6,7 +6,7 @@ public class GoapPlan {
     public required GoapAgent Agent;
     public required GoapGoal Goal;
     public required List<GoapAction> Actions;
-    public required Dictionary<Enum, object?> PredictedStates;
+    public required Dictionary<object, object?> PredictedStates;
     /// <summary>
     /// If true, the plan won't reach the goal but will get the agent closer to it.
     /// </summary>
@@ -31,7 +31,7 @@ public class GoapPlan {
         OpenQueue.Enqueue(FirstStep, 0);
 
         // Track cost to reach each state
-        Dictionary<Dictionary<Enum, object?>, double> StateCosts = new(new DictionaryComparer<Enum, object?>());
+        Dictionary<Dictionary<object, object?>, double> StateCosts = new(new DictionaryComparer<object, object?>());
         // Track best step
         GoapStep BestStep = FirstStep;
 
