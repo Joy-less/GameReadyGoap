@@ -47,36 +47,40 @@ public class GoapPlan {
 
         // Track cost to reach each state
         Dictionary<Dictionary<object, object?>, double> StateCosts = new(new DictionaryComparer<object, object?>());
-        // Track most promising step
+        // Track step that gets the closest
         GoapStep BestStep = FirstStep;
 
         // Repeatedly find next steps
         for (int Iteration = 0; Iteration < Settings.Value.MaxIterations; Iteration++) {
             // Get most promising step
-            if (!OpenQueue.TryDequeue(out GoapStep? NewBestStep)) {
+            if (!OpenQueue.TryDequeue(out GoapStep? CurrentStep)) {
                 break;
             }
-            BestStep = NewBestStep;
 
             // Plan found
-            if (Goal.IsReached(BestStep.PredictedStates)) {
+            if (Goal.IsReached(CurrentStep.PredictedStates)) {
                 return new GoapPlan() {
                     Agent = Agent,
                     Goal = Goal,
-                    Actions = BestStep.GetActions(),
-                    PredictedStates = BestStep.PredictedStates,
+                    Actions = CurrentStep.GetActions(),
+                    PredictedStates = CurrentStep.PredictedStates,
                     IsBestEffort = false,
                 };
             }
 
+            // Set step as best if it gets the closest to the goal
+            if (Goal.IsReachedWithBestEffort(CurrentStep.PredictedStates, BestStep.PredictedStates)) {
+                BestStep = CurrentStep;
+            }
+
             // Check possible continuations
-            foreach (GoapAction Action in Agent.GetValidActions(BestStep.PredictedStates)) {
+            foreach (GoapAction Action in Agent.GetValidActions(CurrentStep.PredictedStates)) {
                 // Create step to continue most promising step
                 GoapStep NextStep = new() {
-                    Previous = BestStep,
+                    Previous = CurrentStep,
                     Action = Action,
-                    PredictedStates = Action.PredictStates(BestStep.PredictedStates),
-                    Cost = Action.Cost(Agent) + (BestStep.Previous?.Cost ?? 0),
+                    PredictedStates = Action.PredictStates(CurrentStep.PredictedStates),
+                    Cost = Action.Cost(Agent) + (CurrentStep.Previous?.Cost ?? 0),
                 };
 
                 // Get heuristic distance to goal
