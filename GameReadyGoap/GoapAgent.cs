@@ -53,7 +53,7 @@ public class GoapAgent(object? Name = null) {
     public GoapPlan? FindPlan(GoapPlanSettings? Settings = null) {
         // Try find plan for highest priority goals first
         foreach (GoapGoal Goal in ChooseGoals()) {
-            GoapPlan? Plan = GoapPlan.Find(this, Goal, Settings);
+            GoapPlan? Plan = FindPlan(Goal, Settings);
             if (Plan is not null) {
                 return Plan;
             }
