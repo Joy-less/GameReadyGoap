@@ -47,15 +47,16 @@ public class GoapPlan {
 
         // Track cost to reach each state
         Dictionary<Dictionary<object, object?>, double> StateCosts = new(new DictionaryComparer<object, object?>());
-        // Track best step
+        // Track most promising step
         GoapStep BestStep = FirstStep;
 
         // Repeatedly find next steps
         for (int Iteration = 0; Iteration < Settings.Value.MaxIterations; Iteration++) {
             // Get most promising step
-            if (!OpenQueue.TryDequeue(out BestStep)) {
+            if (!OpenQueue.TryDequeue(out GoapStep? NewBestStep)) {
                 break;
             }
+            BestStep = NewBestStep;
 
             // Plan found
             if (Goal.IsReached(BestStep.PredictedStates)) {

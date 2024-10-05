@@ -59,7 +59,6 @@ public class FarmerTest {
         Assert.IsNotNull(GoapPlan.Find(Agent, Agent.Goals[0]));
     }
 }
-
 public enum FarmerState {
     Energy,
     CropHealth,
