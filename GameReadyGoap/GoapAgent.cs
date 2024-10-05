@@ -2,8 +2,8 @@ using System.Collections.Concurrent;
 
 namespace GameReadyGoap;
 
-public class GoapAgent(string? Name = null) {
-    public string? Name = Name;
+public class GoapAgent(object? Name = null) {
+    public object? Name = Name;
     public required ConcurrentDictionary<object, object?> States = [];
     public required List<GoapGoal> Goals = [];
     public required List<GoapAction> Actions = [];

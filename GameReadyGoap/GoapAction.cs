@@ -1,7 +1,7 @@
 namespace GameReadyGoap;
 
-public class GoapAction(string? Name = null) {
-    public string? Name = Name;
+public class GoapAction(object? Name = null) {
+    public object? Name = Name;
     public required List<GoapEffect> Effects;
     public List<GoapCondition> Requirements = [];
     public Func<GoapAgent, double> Cost = _ => 1;

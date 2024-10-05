@@ -1,7 +1,7 @@
 namespace GameReadyGoap;
 
-public class GoapGoal(string? Name = null) {
-    public string? Name = Name;
+public class GoapGoal(object? Name = null) {
+    public object? Name = Name;
     public GoapCondition[] Objectives = [];
     public Func<GoapAgent, double> Priority = _ => 1;
     public Func<GoapAgent, bool> IsValid = _ => true;
