@@ -17,6 +17,7 @@
     <PackageIcon>Icon.jpg</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>GOAP, AI, plan</PackageTags>
+    <Authors>Joyless</Authors>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\Assets\Icon.jpg">
