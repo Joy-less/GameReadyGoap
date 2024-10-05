@@ -33,6 +33,6 @@ public class GoapStateOperationValue : GoapValue {
     public required GoapValue Operand;
 
     public override object? Evaluate(IReadOnlyDictionary<Enum, object?> States) {
-        return States.GetValueOrDefault(State);
+        return Operation.Operate(States.GetValueOrDefault(State), Operand.Evaluate(States));
     }
 }
