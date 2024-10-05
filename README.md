@@ -1,6 +1,8 @@
 <img src="https://github.com/Joy-less/GameReadyGoap/blob/main/Assets/Icon.jpg?raw=true" width=256/>
 
 # Game Ready Goap
+
+[![NuGet](https://img.shields.io/nuget/v/GameReadyGoap.svg)](https://www.nuget.org/packages/GameReadyGoap)
  
 An easy-to-use implementation of [GOAP](https://youtu.be/LhnlNKWh7oc) (Goal-Oriented Action Planning) to control game characters in C#.
 
