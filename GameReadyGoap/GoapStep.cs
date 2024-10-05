@@ -23,6 +23,9 @@ internal class GoapStep : StablePriorityQueueNode {
         Actions.Reverse();
         return Actions;
     }
+    /// <summary>
+    /// Gets the heuristic distance between the step and the goal.
+    /// </summary>
     public double EstimateDistance(GoapGoal Goal) {
         // Get distance of resultant states to desired states
         double Distance = 0;

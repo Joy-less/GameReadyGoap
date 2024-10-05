@@ -1,7 +1,13 @@
 namespace GameReadyGoap;
 
+/// <summary>
+/// A set of extension methods used in <see cref="GameReadyGoap"/>.
+/// </summary>
 public static class GoapExtensions {
-    public static bool Compare(this GoapComparison Comparison, dynamic? ValueA, dynamic? ValueB) {
+    /// <summary>
+    /// Compares the first value with the second value.
+    /// </summary>
+    public static bool IsMet(this GoapComparison Comparison, dynamic? ValueA, dynamic? ValueB) {
         return Comparison switch {
             GoapComparison.EqualTo => ValueA == ValueB,
             GoapComparison.NotEqualTo => ValueA != ValueB,
@@ -12,6 +18,9 @@ public static class GoapExtensions {
             _ => throw new NotImplementedException()
         };
     }
+    /// <summary>
+    /// Compares the value with the target, or the value with the previous value.
+    /// </summary>
     public static bool IsMetOrCloser(this GoapComparison Comparison, dynamic? Target, dynamic? Value, dynamic? PreviousValue) {
         return Comparison switch {
             GoapComparison.EqualTo => (Value == Target) || (Math.Abs(Value - Target) < Math.Abs(PreviousValue - Target)),
@@ -23,6 +32,9 @@ public static class GoapExtensions {
             _ => throw new NotImplementedException()
         };
     }
+    /// <summary>
+    /// Performs the operation on the first value with the second value.
+    /// </summary>
     public static dynamic? Operate(this GoapOperation Operation, dynamic? ValueA, dynamic? ValueB) {
         return Operation switch {
             GoapOperation.SetTo => ValueB,

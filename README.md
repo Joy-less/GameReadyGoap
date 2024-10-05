@@ -30,7 +30,7 @@ GoapAgent Agent = new() {
 
 Then, finding a plan is easy:
 ```cs
-Agent.FindPlan(); // or GoapPlan.Find(Agent, Goal);
+Agent.FindPlan(); // or Agent.FindPlan(Goal);
 ```
 
 ## Example

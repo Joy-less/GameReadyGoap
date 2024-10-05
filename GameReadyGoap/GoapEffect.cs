@@ -1,8 +1,20 @@
 namespace GameReadyGoap;
 
+/// <summary>
+/// An effect a <see cref="GoapAction"/> will have on a <see cref="GoapAgent"/>'s states.
+/// </summary>
 public class GoapEffect {
+    /// <summary>
+    /// The state to change.
+    /// </summary>
     public required object State;
+    /// <summary>
+    /// The operation to perform.
+    /// </summary>
     public required GoapOperation Operation;
+    /// <summary>
+    /// The operand for the operation.
+    /// </summary>
     public required GoapValue Value;
 
     /// <summary>

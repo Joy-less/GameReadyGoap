@@ -2,10 +2,25 @@ using Priority_Queue;
 
 namespace GameReadyGoap;
 
+/// <summary>
+/// A sequence of actions a <see cref="GoapAgent"/> could perform to reach a <see cref="GoapGoal"/>.
+/// </summary>
 public class GoapPlan {
+    /// <summary>
+    /// The agent the plan was created for.
+    /// </summary>
     public required GoapAgent Agent;
+    /// <summary>
+    /// The goal the plan was created for.
+    /// </summary>
     public required GoapGoal Goal;
+    /// <summary>
+    /// The actions that should be performed to reach the goal.
+    /// </summary>
     public required List<GoapAction> Actions;
+    /// <summary>
+    /// The agent's predicted states after the plan is performed.
+    /// </summary>
     public required Dictionary<object, object?> PredictedStates;
     /// <summary>
     /// If true, the plan won't reach the goal but will get the agent closer to it.
@@ -35,14 +50,14 @@ public class GoapPlan {
         // Track best step
         GoapStep BestStep = FirstStep;
 
-        // Repeatedly find new steps
+        // Repeatedly find next steps
         for (int Iteration = 0; Iteration < Settings.Value.MaxIterations; Iteration++) {
             // Get most promising step
             if (!OpenQueue.TryDequeue(out BestStep)) {
                 break;
             }
 
-            // Found plan
+            // Plan found
             if (Goal.IsReached(BestStep.PredictedStates)) {
                 return new GoapPlan() {
                     Agent = Agent,
@@ -55,6 +70,7 @@ public class GoapPlan {
 
             // Check possible continuations
             foreach (GoapAction Action in Agent.GetValidActions(BestStep.PredictedStates)) {
+                // Create step to continue most promising step
                 GoapStep NextStep = new() {
                     Previous = BestStep,
                     Action = Action,
@@ -78,12 +94,12 @@ public class GoapPlan {
                     StateCosts[NextStep.PredictedStates] = TotalCost;
                 }
 
-                // Enqueue step in order of priority
+                // Submit step in order of priority
                 OpenQueue.EnqueueWithoutDuplicates(NextStep, TotalCost);
             }
         }
 
-        // Return a plan that makes some progress towards the goal if possible
+        // Plan found that makes some progress toward the goal
         if (Goal.IsReachedWithBestEffort(BestStep.PredictedStates, FirstStep.PredictedStates)) {
             return new GoapPlan() {
                 Agent = Agent,
@@ -98,7 +114,22 @@ public class GoapPlan {
         return null;
     }
 }
+/// <summary>
+/// Settings to fine-tune the finding of a <see cref="GoapPlan"/>.
+/// </summary>
 public struct GoapPlanSettings() {
+    /// <summary>
+    /// How many times to try to find a plan that reaches the goal before giving up.<br/>
+    /// If too low, plans that take more actions will be missed.<br/>
+    /// If too high, time will be wasted when there is no possible plan.<br/>
+    /// Default: 1000
+    /// </summary>
     public int MaxIterations = 1000;
+    /// <summary>
+    /// How much to consider plans that won't help the agent in the short term.<br/>
+    /// If too low, plans that could be beneficial in the long term will be missed (e.g. buying a sword to deal more damage to the player).<br/>
+    /// If too high, time will be wasted considering plans that are unlikely to reach the goal.<br/>
+    /// Default: 10
+    /// </summary>
     public int MaxDistanceEstimate = 10;
 }
