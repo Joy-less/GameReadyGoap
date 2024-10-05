@@ -8,7 +8,7 @@ public class FarmerTest {
             [FarmerState.CropHealth] = 0,
         },
         Goals = [
-            new GoapGoal("IncreaseCropHealth") {
+            new GoapGoal("TendToCrops") {
                 Objectives = [
                     new GoapCondition() {
                         State = FarmerState.CropHealth,
@@ -30,14 +30,14 @@ public class FarmerTest {
                     new GoapEffect() {
                         State = FarmerState.Energy,
                         Operation = GoapOperation.DecreaseBy,
-                        Value = 50,
+                        Value = 30,
                     },
                 ],
                 Requirements = [
                     new GoapCondition() {
                         State = FarmerState.Energy,
                         Comparison = GoapComparison.GreaterThanOrEqualTo,
-                        Value = 10,
+                        Value = 30,
                     },
                 ],
             },
