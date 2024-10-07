@@ -1,4 +1,4 @@
-using Priority_Queue;
+﻿using Priority_Queue;
 
 namespace GameReadyGoap;
 
@@ -99,6 +99,7 @@ public class GoapPlan {
             Action = null, 
             PredictedStates = Agent.States.ToDictionary(),
             Cost = 0,
+            ActionCount = 0,
         };
         OpenQueue.Enqueue(FirstStep, 0);
 
@@ -130,34 +131,38 @@ public class GoapPlan {
                 BestStep = CurrentStep;
             }
 
-            // Check possible continuations
-            foreach (GoapAction Action in Agent.GetValidActions(CurrentStep.PredictedStates)) {
-                // Create step to continue most promising step
-                GoapStep NextStep = new() {
-                    Previous = CurrentStep,
-                    Action = Action,
-                    PredictedStates = Action.PredictStates(CurrentStep.PredictedStates),
-                    Cost = Action.Cost(Agent) + (CurrentStep.Previous?.Cost ?? 0),
-                };
+            // Ensure action count is under the maximum
+            if (CurrentStep.ActionCount < Settings.Value.MaxActions) {
+                // Check possible continuations
+                foreach (GoapAction Action in Agent.GetValidActions(CurrentStep.PredictedStates)) {
+                    // Create step to continue most promising step
+                    GoapStep NextStep = new() {
+                        Previous = CurrentStep,
+                        Action = Action,
+                        PredictedStates = Action.PredictStates(CurrentStep.PredictedStates),
+                        Cost = Action.Cost(Agent) + (CurrentStep.Previous?.Cost ?? 0),
+                        ActionCount = CurrentStep.ActionCount + 1,
+                    };
 
-                // Get heuristic distance to goal
-                double HeuristicDistance = NextStep.EstimateDistance(Goal);
-                if (HeuristicDistance > Settings.Value.MaxDistanceEstimate) {
-                    continue;
-                }
-                double TotalCost = NextStep.Cost + HeuristicDistance;
+                    // Get heuristic distance to goal
+                    double HeuristicDistance = NextStep.EstimateDistance(Goal);
+                    if (HeuristicDistance > Settings.Value.MaxDistanceEstimate) {
+                        continue;
+                    }
+                    double TotalCost = NextStep.Cost + HeuristicDistance;
 
-                // Skip if there's a cheaper path to this state already
-                if (StateCosts.TryGetValue(NextStep.PredictedStates, out double CurrentCost) && CurrentCost <= TotalCost) {
-                    continue;
-                }
-                // Otherwise set as cheapest path
-                else {
-                    StateCosts[NextStep.PredictedStates] = TotalCost;
-                }
+                    // Skip if there's a cheaper path to this state already
+                    if (StateCosts.TryGetValue(NextStep.PredictedStates, out double CurrentCost) && CurrentCost <= TotalCost) {
+                        continue;
+                    }
+                    // Otherwise set as cheapest path
+                    else {
+                        StateCosts[NextStep.PredictedStates] = TotalCost;
+                    }
 
-                // Submit step in order of priority
-                OpenQueue.EnqueueWithoutDuplicates(NextStep, TotalCost);
+                    // Submit step in order of priority
+                    OpenQueue.EnqueueWithoutDuplicates(NextStep, TotalCost);
+                }
             }
         }
 
@@ -194,4 +199,9 @@ public struct GoapPlanSettings() {
     /// Default: 10
     /// </summary>
     public int MaxDistanceEstimate = 10;
+    /// <summary>
+    /// The maximum number of actions in a valid plan.<br/>
+    /// Default: ∞
+    /// </summary>
+    public int MaxActions = int.MaxValue;
 }

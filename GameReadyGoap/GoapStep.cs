@@ -7,12 +7,13 @@ internal class GoapStep : StablePriorityQueueNode {
     public required GoapAction? Action;
     public required Dictionary<object, object?> PredictedStates;
     public required double Cost;
+    public required int ActionCount;
 
     /// <summary>
     /// Gets the full list of actions resulting in <see cref="PredictedStates"/>.
     /// </summary>
     public List<GoapAction> GetActions() {
-        List<GoapAction> Actions = [];
+        List<GoapAction> Actions = new(ActionCount);
         GoapStep CurrentStep = this;
         while (CurrentStep.Previous is not null) {
             if (CurrentStep.Action is not null) {
