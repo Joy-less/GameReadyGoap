@@ -122,6 +122,19 @@ We get 15 actions which bring us to our goal:
 | Sleep   | 30     | 80          |
 | Farm    | 0      | 100         |
 
+## Tips
+
+#### Avoid near-impossible goals
+Instead of aiming to set the player's health = 0, aim for <= 0.
+Best-effort plans are slow to find because plans that reach the goal are always prioritised.
+
+#### Avoid lots of actions
+The more actions an agent has, the longer it will take to find a plan.
+
+#### Know the limitations
+GOAP requires a lot of trial and error to use successfully.
+If configured poorly, it may result in unpredictable plans that are feasible but not believable.
+
 ## Special Thanks
 
 - [F.E.A.R.](https://en.wikipedia.org/wiki/F.E.A.R.) for creating the GOAP algorithm.
