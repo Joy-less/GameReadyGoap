@@ -21,7 +21,7 @@ public class GoapGoal(object? Name = null) {
     /// Invalid goals will be ignored.<br/>
     /// By default, always returns true.
     /// </summary>
-    public Func<GoapAgent, bool> IsValid = _ => true;
+    public Func<GoapAgent, bool> IsValidOverride = _ => true;
 
     /// <summary>
     /// Returns true if the goal is reached with the given states.

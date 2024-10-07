@@ -68,35 +68,61 @@ public class GoapAgent(object? Name = null) {
         return GoapPlan.Find(this, Goal, Settings);
     }
     /// <summary>
-    /// Gets the agent's goals that should be considered.
+    /// Returns true if the goal is valid for this agent with the given states.
+    /// </summary>
+    public bool IsGoalValid(GoapGoal Goal, IReadOnlyDictionary<object, object?> States) {
+        if (!Goal.IsValidOverride(this)) {
+            return false;
+        }
+        if (Goal.IsReached(States)) {
+            return false;
+        }
+        return true;
+    }
+    /// <summary>
+    /// Returns true if the goal is valid for this agent.
+    /// </summary>
+    public bool IsGoalValid(GoapGoal Goal) {
+        return IsGoalValid(Goal, States);
+    }
+    /// <summary>
+    /// Returns true if the action is valid for this agent with the given states.
+    /// </summary>
+    public bool IsActionValid(GoapAction Action, IReadOnlyDictionary<object, object?> States) {
+        if (!Action.IsValidOverride(this)) {
+            return false;
+        }
+        if (!Action.Requirements.All(Requirement => Requirement.IsMet(States))) {
+            return false;
+        }
+        return true;
+    }
+    /// <summary>
+    /// Returns true if the action is valid for this agent.
+    /// </summary>
+    public bool IsActionValid(GoapAction Action) {
+        return IsActionValid(Action, States);
+    }
+    /// <summary>
+    /// Returns the valid goals for this agent with the given states.
+    /// </summary>
+    public IEnumerable<GoapGoal> GetValidGoals(IReadOnlyDictionary<object, object?> States) {
+        return Goals.Where(Goal => IsGoalValid(Goal, States));
+    }
+    /// <summary>
+    /// Returns the valid goals for this agent.
     /// </summary>
     public IEnumerable<GoapGoal> GetValidGoals() {
-        foreach (GoapGoal Goal in Goals) {
-            if (!Goal.IsValid(this)) {
-                continue;
-            }
-            if (Goal.IsReached(States)) {
-                continue;
-            }
-            yield return Goal;
-        }
+        return GetValidGoals(States);
     }
     /// <summary>
-    /// Gets the agent's actions that should be considered with the given states.
+    /// Returns the valid actions for this agent with the given states.
     /// </summary>
     public IEnumerable<GoapAction> GetValidActions(IReadOnlyDictionary<object, object?> States) {
-        foreach (GoapAction Action in Actions) {
-            if (!Action.IsValid(this)) {
-                continue;
-            }
-            if (!Action.Requirements.All(Requirement => Requirement.IsMet(States))) {
-                continue;
-            }
-            yield return Action;
-        }
+        return Actions.Where(Action => IsActionValid(Action, States));
     }
     /// <summary>
-    /// Gets the agent's actions that should be considered.
+    /// Returns the valid actions for this agent.
     /// </summary>
     public IEnumerable<GoapAction> GetValidActions() {
         return GetValidActions(States);

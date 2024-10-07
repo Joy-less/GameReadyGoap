@@ -13,7 +13,7 @@ public class GoapAction(object? Name = null) {
     /// </summary>
     public required List<GoapEffect> Effects;
     /// <summary>
-    /// The requirements that must be met before the action can be performed.
+    /// The requirements that must be met before the action becomes valid.
     /// </summary>
     public List<GoapCondition> Requirements = [];
     /// <summary>
@@ -25,7 +25,7 @@ public class GoapAction(object? Name = null) {
     /// Invalid actions will be ignored.<br/>
     /// By default, always returns true.
     /// </summary>
-    public Func<GoapAgent, bool> IsValid = _ => true;
+    public Func<GoapAgent, bool> IsValidOverride = _ => true;
 
     /// <summary>
     /// Gets the predicted states after the action is performed.
