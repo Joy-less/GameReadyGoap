@@ -28,30 +28,60 @@ public class GoapPlan {
     public required bool IsBestEffort;
 
     /// <summary>
-    /// Executes each action of the plan if valid.
+    /// Executes each action if valid and successful.
     /// </summary>
     /// <returns>true if finished.</returns>
-    public bool Execute(GoapAgent Agent, Action<GoapAction> ExecuteAction) {
+    public bool Execute(GoapAgent Agent, Func<GoapAction, bool> ExecuteAction) {
         foreach (GoapAction Action in Actions) {
             if (!Agent.IsActionValid(Action)) {
                 return false;
             }
-            ExecuteAction(Action);
+            if (!ExecuteAction(Action)) {
+                return false;
+            }
         }
         return true;
     }
     /// <summary>
-    /// Executes each action of the plan if valid.
+    /// Executes each action if valid and successful.
     /// </summary>
     /// <returns>true if finished.</returns>
-    public async Task<bool> ExecuteAsync(GoapAgent Agent, Func<GoapAction, Task> ExecuteActionAsync) {
+    public bool Execute(GoapAgent Agent, Action<GoapAction> ExecuteAction, bool CancelOnAgentGoalChange = true) {
+        return Execute(Agent, Action => {
+            if (CancelOnAgentGoalChange && Goal != Agent.ChooseGoals().FirstOrDefault()) {
+                return false;
+            }
+            ExecuteAction(Action);
+            return true;
+        });
+    }
+    /// <summary>
+    /// Executes each action if valid and successful.
+    /// </summary>
+    /// <returns>true if finished.</returns>
+    public async Task<bool> ExecuteAsync(GoapAgent Agent, Func<GoapAction, Task<bool>> ExecuteActionAsync) {
         foreach (GoapAction Action in Actions) {
             if (!Agent.IsActionValid(Action)) {
                 return false;
             }
-            await ExecuteActionAsync(Action);
+            if (!await ExecuteActionAsync(Action)) {
+                return false;
+            }
         }
         return true;
+    }
+    /// <summary>
+    /// Executes each action if valid and successful.
+    /// </summary>
+    /// <returns>true if finished.</returns>
+    public async Task<bool> ExecuteAsync(GoapAgent Agent, Func<GoapAction, Task> ExecuteActionAsync, bool CancelOnAgentGoalChange = true) {
+        return await ExecuteAsync(Agent, async Action => {
+            if (CancelOnAgentGoalChange && Goal != Agent.ChooseGoals().FirstOrDefault()) {
+                return false;
+            }
+            await ExecuteActionAsync(Action);
+            return true;
+        });
     }
 
     /// <summary>
