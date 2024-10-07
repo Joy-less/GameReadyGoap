@@ -37,6 +37,13 @@ Then, finding a plan is easy:
 Agent.FindPlan(); // or Agent.FindPlan(Goal);
 ```
 
+Executing plans is also easy:
+```cs
+Plan.Execute(Agent, Action => {
+    ...
+});
+```
+
 ## Example
 
 A farmer is balancing tending to his crops with resting. He can farm to increase his crop health, which requires energy, or sleep to increase his energy.

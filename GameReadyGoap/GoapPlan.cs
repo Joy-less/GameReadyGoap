@@ -28,6 +28,33 @@ public class GoapPlan {
     public required bool IsBestEffort;
 
     /// <summary>
+    /// Executes each action of the plan if valid.
+    /// </summary>
+    /// <returns>true if finished.</returns>
+    public bool Execute(GoapAgent Agent, Action<GoapAction> ExecuteAction) {
+        foreach (GoapAction Action in Actions) {
+            if (!Agent.IsActionValid(Action)) {
+                return false;
+            }
+            ExecuteAction(Action);
+        }
+        return true;
+    }
+    /// <summary>
+    /// Executes each action of the plan if valid.
+    /// </summary>
+    /// <returns>true if finished.</returns>
+    public async Task<bool> ExecuteAsync(GoapAgent Agent, Func<GoapAction, Task> ExecuteActionAsync) {
+        foreach (GoapAction Action in Actions) {
+            if (!Agent.IsActionValid(Action)) {
+                return false;
+            }
+            await ExecuteActionAsync(Action);
+        }
+        return true;
+    }
+
+    /// <summary>
     /// Finds a plan that reaches the goal using the A* algorithm.
     /// </summary>
     public static GoapPlan? Find(GoapAgent Agent, GoapGoal Goal, GoapPlanSettings? Settings = null) {
