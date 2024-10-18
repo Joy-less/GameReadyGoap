@@ -95,7 +95,7 @@ public class GoapPlan {
         GoapStep FirstStep = new() {
             Previous = null,
             Action = null, 
-            PredictedStates = Agent.States.ToDictionary(),
+            PredictedStates = new(Agent.States),
             TotalCost = 0,
             TotalSteps = 0,
         };

@@ -31,7 +31,7 @@ public class GoapAction(object? Name = null) {
     /// Gets the predicted states after the action is performed.
     /// </summary>
     public Dictionary<object, object?> PredictStates(IReadOnlyDictionary<object, object?> States) {
-        Dictionary<object, object?> PredictedStates = States.ToDictionary();
+        Dictionary<object, object?> PredictedStates = new(States);
         foreach (GoapEffect Effect in Effects) {
             PredictedStates[Effect.State] = Effect.PredictState(PredictedStates);
         }
