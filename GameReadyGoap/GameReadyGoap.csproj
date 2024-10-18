@@ -29,7 +29,4 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="OptimizedPriorityQueue" Version="5.1.0" />
-  </ItemGroup>
 </Project>

@@ -1,6 +1,4 @@
-﻿using Priority_Queue;
-
-namespace GameReadyGoap;
+﻿namespace GameReadyGoap;
 
 /// <summary>
 /// A sequence of actions a <see cref="GoapAgent"/> could perform to reach a <see cref="GoapGoal"/>.
@@ -91,7 +89,7 @@ public class GoapPlan {
         Settings ??= new GoapPlanSettings();
 
         // Create queue that puts cheapest steps first
-        SimplePriorityQueue<GoapStep, double> OpenQueue = [];
+        PriorityQueue<GoapStep, double> OpenQueue = new();
 
         // Create first step from initial states
         GoapStep FirstStep = new() {
@@ -111,7 +109,7 @@ public class GoapPlan {
         // Repeatedly find next steps
         for (int Iteration = 0; Iteration < Settings.Value.MaxIterations; Iteration++) {
             // Get most promising step
-            if (!OpenQueue.TryDequeue(out GoapStep? CurrentStep)) {
+            if (!OpenQueue.TryDequeue(out GoapStep? CurrentStep, out _)) {
                 break;
             }
 
@@ -161,7 +159,7 @@ public class GoapPlan {
                     }
 
                     // Submit step in order of priority
-                    OpenQueue.EnqueueWithoutDuplicates(NextStep, TotalCost);
+                    OpenQueue.Enqueue(NextStep, TotalCost);
                 }
             }
         }

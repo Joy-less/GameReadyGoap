@@ -1,8 +1,6 @@
-using Priority_Queue;
-
 namespace GameReadyGoap;
 
-internal class GoapStep : StablePriorityQueueNode {
+internal sealed class GoapStep {
     public required GoapStep? Previous;
     public required GoapAction? Action;
     public required Dictionary<object, object?> PredictedStates;
