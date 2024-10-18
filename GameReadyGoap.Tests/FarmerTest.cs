@@ -56,7 +56,8 @@ public class FarmerTest {
     [TestMethod]
     public void Test() {
         Assert.IsNotNull(Agent.FindPlan());
-        Assert.IsNotNull(GoapPlan.Find(Agent, Agent.Goals[0]));
+        Assert.IsNotNull(Agent.FindPlan(Agent.Goals[0]));
+        Assert.IsNotNull(Agent.FindPlan()?.Actions.FirstOrDefault());
     }
 }
 public enum FarmerState {

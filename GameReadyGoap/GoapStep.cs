@@ -11,16 +11,15 @@ internal sealed class GoapStep {
     /// Gets the full list of actions resulting in <see cref="PredictedStates"/>.
     /// </summary>
     public List<GoapAction> GetActions() {
-        List<GoapAction> Actions = new(TotalSteps);
+        Stack<GoapAction> Actions = new(TotalSteps);
         GoapStep CurrentStep = this;
         while (CurrentStep.Previous is not null) {
             if (CurrentStep.Action is not null) {
-                Actions.Add(CurrentStep.Action);
+                Actions.Push(CurrentStep.Action);
             }
             CurrentStep = CurrentStep.Previous;
         }
-        Actions.Reverse();
-        return Actions;
+        return [.. Actions];
     }
     /// <summary>
     /// Gets the heuristic distance between the step and the goal.
