@@ -96,12 +96,12 @@ public class GoapPlan {
             Previous = null,
             Action = null, 
             PredictedStates = Agent.States.ToDictionary(),
-            Cost = 0,
-            ActionCount = 0,
+            TotalCost = 0,
+            TotalSteps = 0,
         };
         OpenQueue.Enqueue(FirstStep, 0);
 
-        // Track cost to reach each state
+        // Track cost (including heuristics) to reach each state
         Dictionary<Dictionary<object, object?>, double> StateCosts = new(new DictionaryComparer<object, object?>());
         // Track step that gets the closest
         GoapStep BestStep = FirstStep;
@@ -129,8 +129,8 @@ public class GoapPlan {
                 BestStep = CurrentStep;
             }
 
-            // Ensure action count is under the maximum
-            if (CurrentStep.ActionCount < Settings.Value.MaxActions) {
+            // Ensure total actions (plus next action) is under maximum
+            if (CurrentStep.TotalSteps < Settings.Value.MaxActions) {
                 // Check possible continuations
                 foreach (GoapAction Action in Agent.GetValidActions(CurrentStep.PredictedStates)) {
                     // Create step to continue most promising step
@@ -138,16 +138,21 @@ public class GoapPlan {
                         Previous = CurrentStep,
                         Action = Action,
                         PredictedStates = Action.PredictStates(CurrentStep.PredictedStates),
-                        Cost = Action.Cost(Agent) + (CurrentStep.Previous?.Cost ?? 0),
-                        ActionCount = CurrentStep.ActionCount + 1,
+                        TotalCost = Action.Cost(Agent) + (CurrentStep.Previous?.TotalCost ?? 0),
+                        TotalSteps = CurrentStep.TotalSteps + 1,
                     };
+
+                    // Ensure total cost is under maximum
+                    if (NextStep.TotalCost > Settings.Value.MaxCost) {
+                        continue;
+                    }
 
                     // Get heuristic distance to goal
                     double HeuristicDistance = NextStep.EstimateDistance(Goal);
                     if (HeuristicDistance > Settings.Value.MaxDistanceEstimate) {
                         continue;
                     }
-                    double TotalCost = NextStep.Cost + HeuristicDistance;
+                    double TotalCost = NextStep.TotalCost + HeuristicDistance;
 
                     // Skip if there's a cheaper path to this state already
                     if (StateCosts.TryGetValue(NextStep.PredictedStates, out double CurrentCost) && CurrentCost <= TotalCost) {
@@ -202,4 +207,9 @@ public struct GoapPlanSettings() {
     /// Default: ∞
     /// </summary>
     public int MaxActions = int.MaxValue;
+    /// <summary>
+    /// The maximum cost of a valid plan.<br/>
+    /// Default: ∞
+    /// </summary>
+    public double MaxCost = double.MaxValue;
 }

@@ -4,14 +4,14 @@ internal sealed class GoapStep {
     public required GoapStep? Previous;
     public required GoapAction? Action;
     public required Dictionary<object, object?> PredictedStates;
-    public required double Cost;
-    public required int ActionCount;
+    public required double TotalCost;
+    public required int TotalSteps;
 
     /// <summary>
     /// Gets the full list of actions resulting in <see cref="PredictedStates"/>.
     /// </summary>
     public List<GoapAction> GetActions() {
-        List<GoapAction> Actions = new(ActionCount);
+        List<GoapAction> Actions = new(TotalSteps);
         GoapStep CurrentStep = this;
         while (CurrentStep.Previous is not null) {
             if (CurrentStep.Action is not null) {
