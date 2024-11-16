@@ -7,20 +7,16 @@ public class InlineTest {
             [InlineState.Money] = 0m,
         },
         Goals = [
-            new GoapGoal("BeRich") {
-                Objectives = [
-                    new GoapCondition(InlineState.Money, GoapComparison.EqualTo, decimal.MaxValue) {
-                        BestEffort = true,
-                    },
-                ],
-            },
+            new GoapGoal("BeRich", [
+                new GoapCondition(InlineState.Money, GoapComparison.EqualTo, decimal.MaxValue) {
+                    BestEffort = true,
+                },
+            ]),
         ],
         Actions = [
-            new GoapAction("Capitalize") {
-                Effects = [
-                    new GoapEffect(InlineState.Money, GoapOperation.IncreaseBy, 100),
-                ],
-            },
+            new GoapAction("Capitalize", [
+                new GoapEffect(InlineState.Money, GoapOperation.IncreaseBy, 100),
+            ]),
         ],
     };
 

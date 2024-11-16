@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace GameReadyGoap;
 
 /// <summary>
@@ -27,6 +29,14 @@ public class GoapAction(object? Name = null) {
     /// </summary>
     public Func<GoapAgent, bool> IsValidOverride = _ => true;
 
+    /// <summary>
+    /// Constructs a <see cref="GoapAction"/> in-line.
+    /// </summary>
+    [SetsRequiredMembers]
+    public GoapAction(object? Name, List<GoapEffect> Effects) : this() {
+        this.Name = Name;
+        this.Effects = Effects;
+    }
     /// <summary>
     /// Gets the predicted states after the action is performed.
     /// </summary>

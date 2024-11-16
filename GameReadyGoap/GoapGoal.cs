@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace GameReadyGoap;
 
 /// <summary>
@@ -23,6 +25,14 @@ public class GoapGoal(object? Name = null) {
     /// </summary>
     public Func<GoapAgent, bool> IsValidOverride = _ => true;
 
+    /// <summary>
+    /// Constructs a <see cref="GoapGoal"/> in-line.
+    /// </summary>
+    [SetsRequiredMembers]
+    public GoapGoal(object? Name, List<GoapCondition> Objectives) : this() {
+        this.Name = Name;
+        this.Objectives = Objectives;
+    }
     /// <summary>
     /// Returns true if the goal is reached with the given states.
     /// </summary>
