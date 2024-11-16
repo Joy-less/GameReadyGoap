@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace GameReadyGoap;
 
 /// <summary>
 /// A condition for a state's value.
 /// </summary>
-public class GoapCondition {
+public class GoapCondition() {
     /// <summary>
     /// The state to compare.
     /// </summary>
@@ -27,6 +29,15 @@ public class GoapCondition {
     /// </summary>
     public DistanceFunction? EstimateDistance = null;
 
+    /// <summary>
+    /// Constructs a <see cref="GoapCondition"/> in-line.
+    /// </summary>
+    [SetsRequiredMembers]
+    public GoapCondition(object State, GoapComparison Comparison, GoapValue Value) : this() {
+        this.State = State;
+        this.Comparison = Comparison;
+        this.Value = Value;
+    }
     /// <summary>
     /// Returns true if the condition is met with the given states.
     /// </summary>
