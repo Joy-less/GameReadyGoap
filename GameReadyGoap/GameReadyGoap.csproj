@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <VersionPrefix>2.1</VersionPrefix>
-    <TargetFrameworks>net7.0;net8.0</TargetFrameworks>
-    <LangVersion>12</LangVersion>
+    <TargetFrameworks>net7.0;net8.0;net9.0</TargetFrameworks>
+    <LangVersion>13</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <WarningLevel>9999</WarningLevel>
