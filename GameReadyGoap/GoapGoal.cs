@@ -13,7 +13,7 @@ public class GoapGoal(object? Name = null) {
     /// <summary>
     /// The conditions that must be met for the goal to be reached.
     /// </summary>
-    public GoapCondition[] Objectives = [];
+    public required List<GoapCondition> Objectives = [];
     /// <summary>
     /// Goals with higher priorities will be prioritised.<br/>
     /// By default, always returns 1.
