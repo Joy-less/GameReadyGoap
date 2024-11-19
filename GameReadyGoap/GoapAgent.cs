@@ -13,15 +13,15 @@ public class GoapAgent(object? Name = null) {
     /// <summary>
     /// The values describing the agent's current state.
     /// </summary>
-    public required ConcurrentDictionary<object, object?> States = [];
+    public required ConcurrentDictionary<object, object?> States;
     /// <summary>
     /// The goals the agent is trying to achieve.
     /// </summary>
-    public required List<GoapGoal> Goals = [];
+    public required List<GoapGoal> Goals;
     /// <summary>
     /// The actions the agent can perform to change its states.
     /// </summary>
-    public required List<GoapAction> Actions = [];
+    public required List<GoapAction> Actions;
 
     /// <summary>
     /// Gets the current value of the given state, casting it to the given type.
