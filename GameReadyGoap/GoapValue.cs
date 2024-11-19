@@ -111,3 +111,26 @@ public class GoapStateOperationValue() : GoapValue {
         return Operation.Operate(States.GetValueOrDefault(State), Operand.Evaluate(States));
     }
 }
+/// <summary>
+/// The value returned from a function.
+/// </summary>
+public class GoapSensorValue() : GoapValue {
+    /// <summary>
+    /// A function that returns the value.
+    /// </summary>
+    public required Func<object?> GetValue;
+
+    /// <summary>
+    /// Constructs a <see cref="GoapSensorValue"/> in-line.
+    /// </summary>
+    [SetsRequiredMembers]
+    public GoapSensorValue(Func<object?> GetValue) : this() {
+        this.GetValue = GetValue;
+    }
+    /// <summary>
+    /// Returns the state value after the operation.
+    /// </summary>
+    public override object? Evaluate(IReadOnlyDictionary<object, object?> States) {
+        return GetValue();
+    }
+}
