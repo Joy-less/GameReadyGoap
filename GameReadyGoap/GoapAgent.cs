@@ -95,6 +95,7 @@ public class GoapAgent(object? Name = null) {
     /// Returns true if the goal is valid for this agent.
     /// </summary>
     public bool IsGoalValid(GoapGoal Goal) {
+        SenseStates();
         return IsGoalValid(Goal, States);
     }
     /// <summary>
@@ -113,6 +114,7 @@ public class GoapAgent(object? Name = null) {
     /// Returns true if the action is valid for this agent.
     /// </summary>
     public bool IsActionValid(GoapAction Action) {
+        SenseStates();
         return IsActionValid(Action, States);
     }
     /// <summary>
@@ -125,6 +127,7 @@ public class GoapAgent(object? Name = null) {
     /// Returns the valid goals for this agent.
     /// </summary>
     public IEnumerable<GoapGoal> GetValidGoals() {
+        SenseStates();
         return GetValidGoals(States);
     }
     /// <summary>
@@ -137,6 +140,7 @@ public class GoapAgent(object? Name = null) {
     /// Returns the valid actions for this agent.
     /// </summary>
     public IEnumerable<GoapAction> GetValidActions() {
+        SenseStates();
         return GetValidActions(States);
     }
 }
