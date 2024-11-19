@@ -20,9 +20,9 @@ public class GoapGoal(object? Name = null) {
     /// </summary>
     public Func<GoapAgent, double> Priority = _ => 1;
     /// <summary>
-    /// Invalid goals will be ignored.<br/>
-    /// By default, always returns true.
+    /// Invalid goals will be ignored.
     /// </summary>
+    /// <remarks>By default, always returns true.</remarks>
     public Func<GoapAgent, bool> IsValidOverride = _ => true;
 
     /// <summary>

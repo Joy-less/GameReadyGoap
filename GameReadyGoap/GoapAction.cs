@@ -24,9 +24,9 @@ public class GoapAction(object? Name = null) {
     /// </summary>
     public Func<GoapAgent, double> Cost = _ => 1;
     /// <summary>
-    /// Invalid actions will be ignored.<br/>
-    /// By default, always returns true.
+    /// Invalid actions will be ignored.
     /// </summary>
+    /// <remarks>By default, always returns true.</remarks>
     public Func<GoapAgent, bool> IsValidOverride = _ => true;
 
     /// <summary>

@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 namespace GameReadyGoap;
 
 /// <summary>
-/// A being that can plan actions to change its states to reach its goals.
+/// An entity that can plan actions to change its states to reach its goals.
 /// </summary>
 public class GoapAgent(object? Name = null) {
     /// <summary>
@@ -30,7 +30,7 @@ public class GoapAgent(object? Name = null) {
         return (T)States.GetValueOrDefault(State)!;
     }
     /// <summary>
-    /// Gets the current value of the given state, cast as a <see langword="dynamic"/>.
+    /// Gets the current value of the given state, cast to a <see langword="dynamic"/>.
     /// </summary>
     public dynamic? GetState(object State) {
         return States.GetValueOrDefault(State);
