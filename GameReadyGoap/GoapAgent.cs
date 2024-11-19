@@ -71,8 +71,8 @@ public class GoapAgent(object? Name = null) {
     /// Returns true if the goal is valid for this agent with the given states.
     /// </summary>
     public bool IsGoalValid(GoapGoal Goal, IReadOnlyDictionary<object, object?> States) {
-        if (!Goal.IsValidOverride(this)) {
-            return false;
+        if (Goal.IsValidOverride(this) is bool Override) {
+            return Override;
         }
         if (Goal.IsReached(States)) {
             return false;
@@ -89,8 +89,8 @@ public class GoapAgent(object? Name = null) {
     /// Returns true if the action is valid for this agent with the given states.
     /// </summary>
     public bool IsActionValid(GoapAction Action, IReadOnlyDictionary<object, object?> States) {
-        if (!Action.IsValidOverride(this)) {
-            return false;
+        if (Action.IsValidOverride(this) is bool Override) {
+            return Override;
         }
         if (!Action.Requirements.All(Requirement => Requirement.IsMet(States))) {
             return false;

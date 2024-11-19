@@ -26,8 +26,8 @@ public class GoapAction(object? Name = null) {
     /// <summary>
     /// Invalid actions will be ignored.
     /// </summary>
-    /// <remarks>By default, always returns true.</remarks>
-    public Func<GoapAgent, bool> IsValidOverride = _ => true;
+    /// <remarks>By default, always returns null.</remarks>
+    public Func<GoapAgent, bool?> IsValidOverride = _ => null;
 
     /// <summary>
     /// Constructs a <see cref="GoapAction"/> in-line.

@@ -22,8 +22,8 @@ public class GoapGoal(object? Name = null) {
     /// <summary>
     /// Invalid goals will be ignored.
     /// </summary>
-    /// <remarks>By default, always returns true.</remarks>
-    public Func<GoapAgent, bool> IsValidOverride = _ => true;
+    /// <remarks>By default, always returns null.</remarks>
+    public Func<GoapAgent, bool?> IsValidOverride = _ => null;
 
     /// <summary>
     /// Constructs a <see cref="GoapGoal"/> in-line.
