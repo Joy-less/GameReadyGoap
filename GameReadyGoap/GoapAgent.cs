@@ -22,6 +22,10 @@ public class GoapAgent(object? Name = null) {
     /// The actions the agent can perform to change its states.
     /// </summary>
     public required List<GoapAction> Actions;
+    /// <summary>
+    /// The state sensors the agent uses to dynamically update its states.
+    /// </summary>
+    public List<GoapSensor> Sensors = [];
 
     /// <summary>
     /// Gets the current value of the given state, casting it to the given type.
@@ -38,14 +42,28 @@ public class GoapAgent(object? Name = null) {
     /// <summary>
     /// Sets the current value of the given state.
     /// </summary>
-    public void SetState(object State, object? Value) {
-        States[State] = Value;
+    public void SetState(object State, GoapValue Value) {
+        States[State] = Value.Evaluate(States);
+    }
+    /// <summary>
+    /// Updates the agent's states from its sensors.
+    /// </summary>
+    public void SenseStates() {
+        foreach (GoapSensor Sensor in Sensors) {
+            SetState(Sensor.State, Sensor.GetValue());
+        }
     }
     /// <summary>
     /// Gets the agent's valid goals in order of priority.
     /// </summary>
     public IEnumerable<GoapGoal> ChooseGoals() {
         return GetValidGoals().OrderByDescending(Goal => Goal.Priority(this));
+    }
+    /// <summary>
+    /// Attempts to find a plan to reach the given goal.
+    /// </summary>
+    public GoapPlan? FindPlan(GoapGoal Goal, GoapPlanSettings? Settings = null) {
+        return GoapPlan.Find(this, Goal, Settings);
     }
     /// <summary>
     /// Attempts to find a plan to reach one of the agent's goals.
@@ -60,12 +78,6 @@ public class GoapAgent(object? Name = null) {
         }
         // No plan found for any goal
         return null;
-    }
-    /// <summary>
-    /// Attempts to find a plan to reach the given goal.
-    /// </summary>
-    public GoapPlan? FindPlan(GoapGoal Goal, GoapPlanSettings? Settings = null) {
-        return GoapPlan.Find(this, Goal, Settings);
     }
     /// <summary>
     /// Returns true if the goal is valid for this agent with the given states.

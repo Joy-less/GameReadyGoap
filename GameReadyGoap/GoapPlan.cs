@@ -88,6 +88,9 @@ public class GoapPlan {
     public static GoapPlan? Find(GoapAgent Agent, GoapGoal Goal, GoapPlanSettings? Settings = null) {
         Settings ??= new GoapPlanSettings();
 
+        // Update agent states from sensors
+        Agent.SenseStates();
+
         // Create queue that puts cheapest steps first
         PriorityQueue<GoapStep, double> OpenQueue = new();
 
