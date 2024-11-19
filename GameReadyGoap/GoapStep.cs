@@ -12,8 +12,8 @@ internal sealed class GoapStep {
     /// </summary>
     public List<GoapAction> GetActions() {
         Stack<GoapAction> Actions = new(TotalSteps);
-        GoapStep CurrentStep = this;
-        while (CurrentStep.Previous is not null) {
+        GoapStep? CurrentStep = this;
+        while (CurrentStep is not null) {
             if (CurrentStep.Action is not null) {
                 Actions.Push(CurrentStep.Action);
             }
