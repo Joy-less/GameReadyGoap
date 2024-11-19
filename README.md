@@ -12,6 +12,20 @@ An easy-to-use implementation of [GOAP](https://youtu.be/LhnlNKWh7oc) (Goal-Orie
 - Expressive with minimal boilerplate
 - Get as close as possible to "best-effort" goals
 
+## GOAP vs HTN
+
+This library is parallel to [Game Ready Htn](https://github.com/Joy-less/GameReadyHtn), an implementation of HTN.
+
+Goal-Oriented Action Planning and Hierarchical Task Networks are both powerful choices for controlling NPCs.
+HTN defines a structured hierarchy of nested tasks that should be completed.
+GOAP defines a set of goals and a set of actions that can be combined to reach those goals.
+
+HTN is simpler, faster and more predictable because the tasks use a predefined order. It's suitable for most game enemies which only have a limited set of actions. It's an implementation of a behaviour tree.
+
+GOAP is more flexible and powerful because the actions can be combined in very complex ways. It's suitable for agents with lots of actions and strategies to consider, such as in Real-Time Strategy games.
+
+[This Reddit discussion](https://www.reddit.com/r/gamedev/comments/1ozugf) provides more comparisons between GOAP, HTN and behaviour trees.
+
 ## Usage
 
 First, create an agent with initial states, goals and actions:
