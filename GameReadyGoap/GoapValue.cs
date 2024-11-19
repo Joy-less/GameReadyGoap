@@ -114,17 +114,17 @@ public class GoapStateOperationValue() : GoapValue {
 /// <summary>
 /// The value returned from a function.
 /// </summary>
-public class GoapSensorValue() : GoapValue {
+public class GoapDynamicValue() : GoapValue {
     /// <summary>
-    /// A function that returns the value.
+    /// The function that returns the value.
     /// </summary>
     public required Func<object?> GetValue;
 
     /// <summary>
-    /// Constructs a <see cref="GoapSensorValue"/> in-line.
+    /// Constructs a <see cref="GoapDynamicValue"/> in-line.
     /// </summary>
     [SetsRequiredMembers]
-    public GoapSensorValue(Func<object?> GetValue) : this() {
+    public GoapDynamicValue(Func<object?> GetValue) : this() {
         this.GetValue = GetValue;
     }
     /// <summary>
