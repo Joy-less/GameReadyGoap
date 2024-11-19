@@ -2,7 +2,7 @@
   <PropertyGroup>
     <VersionPrefix>3.0</VersionPrefix>
     <TargetFrameworks>net7.0;net8.0;net9.0</TargetFrameworks>
-    <LangVersion>13</LangVersion>
+    <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <WarningLevel>9999</WarningLevel>
