@@ -53,9 +53,7 @@ Agent.FindPlan(); // or Agent.FindPlan(Goal);
 
 Executing plans is also easy:
 ```cs
-Plan.Execute(Agent, Action => {
-    ...
-});
+Plan.Execute();
 ```
 
 ## Example
