@@ -9,25 +9,25 @@ public class GoapCondition() {
     /// <summary>
     /// The state to compare.
     /// </summary>
-    public required object State;
+    public required object State { get; set; }
     /// <summary>
     /// How to compare the state value and value.
     /// </summary>
-    public required GoapComparison Comparison;
+    public required GoapComparison Comparison { get; set; }
     /// <summary>
     /// The value to compare the state with.
     /// </summary>
-    public required GoapValue Value;
+    public required GoapValue Value { get; set; }
     /// <summary>
     /// If true, plans that get the agent closer to the condition will be considered, even if they won't reach it. The values must be numbers.<br/>
     /// Default: false
     /// </summary>
-    public bool BestEffort = false;
+    public bool BestEffort { get; set; } = false;
     /// <summary>
     /// A function that returns a lower number when the value is closer to the target.<br/>
     /// By default, uses 0 if met and 2 if not met.
     /// </summary>
-    public DistanceFunction? EstimateDistance = null;
+    public DistanceFunction? EstimateDistance { get; set; } = null;
 
     /// <summary>
     /// Constructs a <see cref="GoapCondition"/> in-line.

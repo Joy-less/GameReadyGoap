@@ -9,21 +9,21 @@ public class GoapGoal(object? Name = null) {
     /// <summary>
     /// An optional identifier.
     /// </summary>
-    public object? Name = Name;
+    public object? Name { get; set; } = Name;
     /// <summary>
     /// The conditions that must be met for the goal to be reached.
     /// </summary>
-    public required List<GoapCondition> Objectives = [];
+    public required List<GoapCondition> Objectives { get; set; } = [];
     /// <summary>
     /// Goals with higher priorities will be prioritised.<br/>
     /// By default, always returns 1.
     /// </summary>
-    public Func<GoapAgent, double> Priority = _ => 1;
+    public Func<GoapAgent, double> Priority { get; set; } = _ => 1;
     /// <summary>
     /// Invalid goals will be ignored.
     /// </summary>
     /// <remarks>By default, always returns null.</remarks>
-    public Func<GoapAgent, bool?> IsValidOverride = _ => null;
+    public Func<GoapAgent, bool?> IsValidOverride { get; set; } = _ => null;
 
     /// <summary>
     /// Constructs a <see cref="GoapGoal"/> in-line.

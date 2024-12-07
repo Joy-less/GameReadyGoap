@@ -9,15 +9,15 @@ public class GoapEffect() {
     /// <summary>
     /// The state to change.
     /// </summary>
-    public required object State;
+    public required object State { get; set; }
     /// <summary>
     /// The operation to perform.
     /// </summary>
-    public required GoapOperation Operation;
+    public required GoapOperation Operation { get; set; }
     /// <summary>
     /// The operand for the operation.
     /// </summary>
-    public required GoapValue Value;
+    public required GoapValue Value { get; set; }
 
     /// <summary>
     /// Constructs a <see cref="GoapEffect"/> in-line.

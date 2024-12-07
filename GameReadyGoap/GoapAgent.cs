@@ -9,23 +9,23 @@ public class GoapAgent(object? Name = null) {
     /// <summary>
     /// An optional identifier.
     /// </summary>
-    public object? Name = Name;
+    public object? Name { get; set; } = Name;
     /// <summary>
     /// The values describing the agent's current state.
     /// </summary>
-    public required ConcurrentDictionary<object, object?> States;
+    public required ConcurrentDictionary<object, object?> States { get; set; }
     /// <summary>
     /// The goals the agent is trying to achieve.
     /// </summary>
-    public required List<GoapGoal> Goals;
+    public required List<GoapGoal> Goals { get; set; }
     /// <summary>
     /// The actions the agent can perform to change its states.
     /// </summary>
-    public required List<GoapAction> Actions;
+    public required List<GoapAction> Actions { get; set; }
     /// <summary>
     /// The state sensors the agent uses to dynamically update its states.
     /// </summary>
-    public List<GoapSensor> Sensors = [];
+    public List<GoapSensor> Sensors { get; set; } = [];
 
     /// <summary>
     /// Gets the current value of the given state, casting it to the given type.

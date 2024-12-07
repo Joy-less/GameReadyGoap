@@ -39,7 +39,7 @@ public class GoapConstantValue() : GoapValue {
     /// <summary>
     /// The constant value.
     /// </summary>
-    public required object? Value;
+    public required object? Value { get; set; }
 
     /// <summary>
     /// Constructs a <see cref="GoapConstantValue"/> in-line.
@@ -62,7 +62,7 @@ public class GoapStateValue() : GoapValue {
     /// <summary>
     /// The state to query.
     /// </summary>
-    public required object State;
+    public required object State { get; set; }
 
     /// <summary>
     /// Constructs a <see cref="GoapStateValue"/> in-line.
@@ -85,15 +85,15 @@ public class GoapStateOperationValue() : GoapValue {
     /// <summary>
     /// The state to query.
     /// </summary>
-    public required object State;
+    public required object State { get; set; }
     /// <summary>
     /// The operation to perform.
     /// </summary>
-    public required GoapOperation Operation;
+    public required GoapOperation Operation { get; set; }
     /// <summary>
     /// The operand for the operation.
     /// </summary>
-    public required GoapValue Operand;
+    public required GoapValue Operand { get; set; }
 
     /// <summary>
     /// Constructs a <see cref="GoapStateOperationValue"/> in-line.
@@ -118,7 +118,7 @@ public class GoapDynamicValue() : GoapValue {
     /// <summary>
     /// The function that returns the value.
     /// </summary>
-    public required Func<object?> GetValue;
+    public required Func<object?> GetValue { get; set; }
 
     /// <summary>
     /// Constructs a <see cref="GoapDynamicValue"/> in-line.
