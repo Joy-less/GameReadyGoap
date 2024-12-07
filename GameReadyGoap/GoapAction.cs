@@ -19,15 +19,20 @@ public class GoapAction(object? Name = null) {
     /// </summary>
     public List<GoapCondition> Requirements = [];
     /// <summary>
-    /// Actions with lower costs will be prioritised.<br/>
-    /// By default, always returns 1.
+    /// Actions with lower costs will be prioritised.
     /// </summary>
+    /// <remarks>By default, always returns 1.</remarks>
     public Func<GoapAgent, double> Cost = _ => 1;
     /// <summary>
     /// Invalid actions will be ignored.
     /// </summary>
     /// <remarks>By default, always returns null.</remarks>
     public Func<GoapAgent, bool?> IsValidOverride = _ => null;
+    /// <summary>
+    /// The function that asynchronously executes the action and returns true if successfully completed.
+    /// </summary>
+    /// <remarks>By default, always returns true.</remarks>
+    public Func<Task<bool>> ExecuteAsync = () => Task.FromResult(true);
 
     /// <summary>
     /// Constructs a <see cref="GoapAction"/> in-line.
@@ -38,13 +43,19 @@ public class GoapAction(object? Name = null) {
         this.Effects = Effects;
     }
     /// <summary>
+    /// Changes the given states by the effects of the action.
+    /// </summary>
+    public void UpdateStates(IDictionary<object, object?> States) {
+        foreach (GoapEffect Effect in Effects) {
+            States[Effect.State] = Effect.PredictState(States);
+        }
+    }
+    /// <summary>
     /// Gets the predicted states after the action is performed.
     /// </summary>
-    public Dictionary<object, object?> PredictStates(IReadOnlyDictionary<object, object?> States) {
+    public Dictionary<object, object?> PredictStates(IDictionary<object, object?> States) {
         Dictionary<object, object?> PredictedStates = new(States);
-        foreach (GoapEffect Effect in Effects) {
-            PredictedStates[Effect.State] = Effect.PredictState(PredictedStates);
-        }
+        UpdateStates(PredictedStates);
         return PredictedStates;
     }
 }

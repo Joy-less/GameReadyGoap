@@ -82,7 +82,7 @@ public class GoapAgent(object? Name = null) {
     /// <summary>
     /// Returns true if the goal is valid for this agent with the given states.
     /// </summary>
-    public bool IsGoalValid(GoapGoal Goal, IReadOnlyDictionary<object, object?> States) {
+    public bool IsGoalValid(GoapGoal Goal, IDictionary<object, object?> States) {
         if (Goal.IsValidOverride(this) is bool Override) {
             return Override;
         }
@@ -101,7 +101,7 @@ public class GoapAgent(object? Name = null) {
     /// <summary>
     /// Returns true if the action is valid for this agent with the given states.
     /// </summary>
-    public bool IsActionValid(GoapAction Action, IReadOnlyDictionary<object, object?> States) {
+    public bool IsActionValid(GoapAction Action, IDictionary<object, object?> States) {
         if (Action.IsValidOverride(this) is bool Override) {
             return Override;
         }
@@ -120,7 +120,7 @@ public class GoapAgent(object? Name = null) {
     /// <summary>
     /// Returns the valid goals for this agent with the given states.
     /// </summary>
-    public IEnumerable<GoapGoal> GetValidGoals(IReadOnlyDictionary<object, object?> States) {
+    public IEnumerable<GoapGoal> GetValidGoals(IDictionary<object, object?> States) {
         return Goals.Where(Goal => IsGoalValid(Goal, States));
     }
     /// <summary>
@@ -133,7 +133,7 @@ public class GoapAgent(object? Name = null) {
     /// <summary>
     /// Returns the valid actions for this agent with the given states.
     /// </summary>
-    public IEnumerable<GoapAction> GetValidActions(IReadOnlyDictionary<object, object?> States) {
+    public IEnumerable<GoapAction> GetValidActions(IDictionary<object, object?> States) {
         return Actions.Where(Action => IsActionValid(Action, States));
     }
     /// <summary>

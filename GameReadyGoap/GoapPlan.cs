@@ -26,63 +26,6 @@ public class GoapPlan {
     public required bool IsBestEffort;
 
     /// <summary>
-    /// Executes each action if valid and successful.
-    /// </summary>
-    /// <returns>true if finished.</returns>
-    public bool Execute(GoapAgent Agent, Func<GoapAction, bool> ExecuteAction) {
-        foreach (GoapAction Action in Actions) {
-            if (!Agent.IsActionValid(Action)) {
-                return false;
-            }
-            if (!ExecuteAction(Action)) {
-                return false;
-            }
-        }
-        return true;
-    }
-    /// <summary>
-    /// Executes each action if valid and successful.
-    /// </summary>
-    /// <returns>true if finished.</returns>
-    public bool Execute(GoapAgent Agent, Action<GoapAction> ExecuteAction, bool CancelOnAgentGoalChange = true) {
-        return Execute(Agent, Action => {
-            if (CancelOnAgentGoalChange && Goal != Agent.ChooseGoals().FirstOrDefault()) {
-                return false;
-            }
-            ExecuteAction(Action);
-            return true;
-        });
-    }
-    /// <summary>
-    /// Executes each action if valid and successful.
-    /// </summary>
-    /// <returns>true if finished.</returns>
-    public async Task<bool> ExecuteAsync(GoapAgent Agent, Func<GoapAction, Task<bool>> ExecuteActionAsync) {
-        foreach (GoapAction Action in Actions) {
-            if (!Agent.IsActionValid(Action)) {
-                return false;
-            }
-            if (!await ExecuteActionAsync(Action)) {
-                return false;
-            }
-        }
-        return true;
-    }
-    /// <summary>
-    /// Executes each action if valid and successful.
-    /// </summary>
-    /// <returns>true if finished.</returns>
-    public async Task<bool> ExecuteAsync(GoapAgent Agent, Func<GoapAction, Task> ExecuteActionAsync, bool CancelOnAgentGoalChange = true) {
-        return await ExecuteAsync(Agent, async Action => {
-            if (CancelOnAgentGoalChange && Goal != Agent.ChooseGoals().FirstOrDefault()) {
-                return false;
-            }
-            await ExecuteActionAsync(Action);
-            return true;
-        });
-    }
-
-    /// <summary>
     /// Finds a plan that reaches the goal using the A* algorithm.
     /// </summary>
     public static GoapPlan? Find(GoapAgent Agent, GoapGoal Goal, GoapPlanSettings? Settings = null) {
@@ -185,6 +128,39 @@ public class GoapPlan {
 
         // No plan found
         return null;
+    }
+
+    /// <summary>
+    /// Tries to execute each action in the plan by calling <see cref="GoapAction.ExecuteAsync"/> and updating the agent's states.
+    /// </summary>
+    /// <param name="CancelOnGoalChange">
+    /// If <see langword="true"/>, cancels the plan if the agent's prioritised goal changes.
+    /// </param>
+    /// <returns>Whether the plan was fully executed successfully.</returns>
+    public async Task<bool> ExecuteAsync(bool CancelOnGoalChange = true) {
+        foreach (GoapAction Action in Actions) {
+            // Cancel if prioritised goal has changed
+            if (CancelOnGoalChange && Goal != Agent.ChooseGoals().FirstOrDefault()) {
+                return false;
+            }
+            // Cancel if action is invalid
+            if (!Agent.IsActionValid(Action)) {
+                return false;
+            }
+            // Execute action and cancel if failed
+            if (!await Action.ExecuteAsync()) {
+                return false;
+            }
+            // Apply the action's effects
+            Action.UpdateStates(Agent.States);
+            // Update states from sensors
+            Agent.SenseStates();
+        }
+        return true;
+    }
+    /// <inheritdoc cref="ExecuteAsync(bool)"/>
+    public bool Execute(bool CancelOnGoalChange = true) {
+        return ExecuteAsync(CancelOnGoalChange).GetAwaiter().GetResult();
     }
 }
 /// <summary>

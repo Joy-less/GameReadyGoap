@@ -47,4 +47,8 @@ public static class GoapExtensions {
             _ => throw new NotImplementedException()
         };
     }
+    /// <inheritdoc cref="CollectionExtensions.GetValueOrDefault{TKey, TValue}(IReadOnlyDictionary{TKey, TValue}, TKey, TValue)"/>
+    public static TValue? GetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> Dictionary, TKey Key, TValue? Default = default) {
+        return Dictionary.TryGetValue(Key, out TValue? Value) ? Value : Default;
+    }
 }

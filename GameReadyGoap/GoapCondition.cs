@@ -41,13 +41,13 @@ public class GoapCondition() {
     /// <summary>
     /// Returns true if the condition is met with the given states.
     /// </summary>
-    public bool IsMet(IReadOnlyDictionary<object, object?> States) {
+    public bool IsMet(IDictionary<object, object?> States) {
         return Comparison.IsMet(States.GetValueOrDefault(State), Value.Evaluate(States));
     }
     /// <summary>
     /// Returns true if the condition is met with the given states, or closer to being met than with the previous states.
     /// </summary>
-    public bool IsMetOrCloser(IReadOnlyDictionary<object, object?> States, IReadOnlyDictionary<object, object?> PreviousStates) {
+    public bool IsMetOrCloser(IDictionary<object, object?> States, IDictionary<object, object?> PreviousStates) {
         if (!BestEffort) {
             return IsMet(States);
         }
