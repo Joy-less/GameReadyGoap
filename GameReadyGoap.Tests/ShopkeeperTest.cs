@@ -1,4 +1,4 @@
-﻿namespace GameReadyGoap.Tests;
+namespace GameReadyGoap.Tests;
 
 [TestClass]
 public class ShopkeeperTest {

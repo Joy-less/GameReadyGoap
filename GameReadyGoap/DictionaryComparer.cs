@@ -1,4 +1,4 @@
-﻿namespace GameReadyGoap;
+namespace GameReadyGoap;
 
 internal class DictionaryComparer<TKey, TValue> : IEqualityComparer<Dictionary<TKey, TValue>> where TKey : notnull {
     public bool Equals(Dictionary<TKey, TValue>? DictA, Dictionary<TKey, TValue>? DictB) {

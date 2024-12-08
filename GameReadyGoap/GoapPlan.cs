@@ -1,4 +1,4 @@
-﻿namespace GameReadyGoap;
+namespace GameReadyGoap;
 
 /// <summary>
 /// A sequence of actions a <see cref="GoapAgent"/> could perform to reach a <see cref="GoapGoal"/>.
@@ -40,7 +40,7 @@ public class GoapPlan {
         // Create first step from initial states
         GoapStep FirstStep = new() {
             Previous = null,
-            Action = null, 
+            Action = null,
             PredictedStates = new(Agent.States),
             TotalCost = 0,
             TotalSteps = 0,
