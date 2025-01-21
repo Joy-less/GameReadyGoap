@@ -12,7 +12,7 @@ public abstract class GoapValue {
     /// </summary>
     public abstract object? Evaluate(IDictionary<object, object?> States);
 
-#pragma warning disable CS1591
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public static implicit operator GoapValue(bool Value) => new GoapConstantValue(Value);
     public static implicit operator GoapValue(sbyte Value) => new GoapConstantValue(Value);
     public static implicit operator GoapValue(byte Value) => new GoapConstantValue(Value);
@@ -30,6 +30,11 @@ public abstract class GoapValue {
     public static implicit operator GoapValue(double Value) => new GoapConstantValue(Value);
     public static implicit operator GoapValue(decimal Value) => new GoapConstantValue(Value);
     public static implicit operator GoapValue(string Value) => new GoapConstantValue(Value);
+    public static implicit operator GoapValue(char Value) => new GoapConstantValue(Value);
+    public static implicit operator GoapValue(DateTime Value) => new GoapConstantValue(Value);
+    public static implicit operator GoapValue(DateTimeOffset Value) => new GoapConstantValue(Value);
+    public static implicit operator GoapValue(TimeSpan Value) => new GoapConstantValue(Value);
+    public static implicit operator GoapValue(Guid Value) => new GoapConstantValue(Value);
 #pragma warning restore CS1591
 }
 /// <summary>
