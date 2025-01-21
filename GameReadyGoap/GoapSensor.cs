@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace GameReadyGoap;
 
 /// <summary>
-/// A dynamic updater of a state.
+/// A dynamic updater of a state.<br/>
 /// Before finding a plan, the agent will call the function to set the state.
 /// </summary>
 public class GoapSensor() {

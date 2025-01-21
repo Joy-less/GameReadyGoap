@@ -1,5 +1,8 @@
 namespace GameReadyGoap;
 
+/// <summary>
+/// A single planned action in a <see cref="GoapPlan"/>.
+/// </summary>
 internal sealed class GoapStep {
     public required GoapStep? Previous;
     public required GoapAction? Action;
