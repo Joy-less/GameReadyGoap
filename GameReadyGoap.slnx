@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="GameReadyGoap.Benchmarks/GameReadyGoap.Benchmarks.csproj" />
+  <Project Path="GameReadyGoap.Tests/GameReadyGoap.Tests.csproj" />
+  <Project Path="GameReadyGoap/GameReadyGoap.csproj" />
+</Solution>
