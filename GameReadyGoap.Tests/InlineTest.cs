@@ -1,6 +1,5 @@
 namespace GameReadyGoap.Tests;
 
-[TestClass]
 public class InlineTest {
     public static readonly GoapAgent Agent = new() {
         States = new() {
@@ -20,11 +19,11 @@ public class InlineTest {
         ],
     };
 
-    [TestMethod]
+    [Fact]
     public void Test() {
-        Assert.IsNotNull(Agent.FindPlan());
-        Assert.IsNotNull(Agent.FindPlan(Agent.Goals[0]));
-        Assert.IsNotNull(Agent.FindPlan()?.Actions.FirstOrDefault());
+        Assert.NotNull(Agent.FindPlan());
+        Assert.NotNull(Agent.FindPlan(Agent.Goals[0]));
+        Assert.NotNull(Agent.FindPlan()?.Actions.FirstOrDefault());
     }
 }
 public enum InlineState {
