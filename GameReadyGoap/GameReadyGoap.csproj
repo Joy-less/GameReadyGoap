@@ -20,13 +20,13 @@
     <Authors>Joyless</Authors>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\Assets\Icon.jpg">
+    <None Include="../Assets/Icon.jpg">
       <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
+      <PackagePath>/</PackagePath>
     </None>
-    <None Include="..\README.md">
+    <None Include="../README.md">
       <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
+      <PackagePath>/</PackagePath>
     </None>
   </ItemGroup>
 </Project>
