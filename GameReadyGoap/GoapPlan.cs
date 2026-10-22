@@ -53,7 +53,7 @@ public class GoapPlan {
         GoapStep BestStep = FirstStep;
 
         // Repeatedly find next steps
-        for (int Iteration = 0; Iteration < Settings.Value.MaxIterations; Iteration++) {
+        for (int Iteration = 0; Iteration <= Settings.Value.MaxIterations; Iteration++) {
             // Get most promising step
             if (!OpenQueue.TryDequeue(out GoapStep? CurrentStep, out _)) {
                 break;
