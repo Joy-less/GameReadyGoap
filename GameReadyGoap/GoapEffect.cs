@@ -31,7 +31,7 @@ public class GoapEffect() {
     /// <summary>
     /// Gets the predicted state value after the effect is applied.
     /// </summary>
-    public object? PredictState(IDictionary<object, object?> States) {
+    public double PredictState(IDictionary<object, double> States) {
         return Operation.Operate(States[State], Value.Evaluate(States));
     }
 }

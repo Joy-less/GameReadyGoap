@@ -19,7 +19,7 @@ public class GoapPlan {
     /// <summary>
     /// The agent's predicted states after the plan is performed.
     /// </summary>
-    public required Dictionary<object, object?> PredictedStates { get; set; }
+    public required Dictionary<object, double> PredictedStates { get; set; }
     /// <summary>
     /// If true, the plan won't reach the goal but will get the agent closer to it.
     /// </summary>
@@ -48,7 +48,7 @@ public class GoapPlan {
         OpenQueue.Enqueue(FirstStep, 0);
 
         // Track cost (including heuristics) to reach each state
-        Dictionary<Dictionary<object, object?>, double> StateCosts = new(new DictionaryComparer<object, object?>());
+        Dictionary<Dictionary<object, double>, double> StateCosts = new(new DictionaryComparer<object, double>());
         // Track step that gets the closest
         GoapStep BestStep = FirstStep;
 

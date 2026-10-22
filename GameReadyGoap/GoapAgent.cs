@@ -13,7 +13,7 @@ public class GoapAgent(object? Name = null) {
     /// <summary>
     /// The values describing the agent's current state.
     /// </summary>
-    public required ConcurrentDictionary<object, object?> States { get; set; }
+    public required ConcurrentDictionary<object, double> States { get; set; }
     /// <summary>
     /// The goals the agent is trying to achieve.
     /// </summary>
@@ -28,15 +28,9 @@ public class GoapAgent(object? Name = null) {
     public List<GoapSensor> Sensors { get; set; } = [];
 
     /// <summary>
-    /// Gets the current value of the given state, casting it to the given type.
+    /// Gets the current value of the given state.
     /// </summary>
-    public T GetState<T>(object State) {
-        return (T)States.GetValueOrDefault(State)!;
-    }
-    /// <summary>
-    /// Gets the current value of the given state, cast to a <see langword="dynamic"/>.
-    /// </summary>
-    public dynamic? GetState(object State) {
+    public double GetState(object State) {
         return States.GetValueOrDefault(State);
     }
     /// <summary>
@@ -82,7 +76,7 @@ public class GoapAgent(object? Name = null) {
     /// <summary>
     /// Returns true if the goal is valid for this agent with the given states.
     /// </summary>
-    public bool IsGoalValid(GoapGoal Goal, IDictionary<object, object?> States) {
+    public bool IsGoalValid(GoapGoal Goal, IDictionary<object, double> States) {
         if (Goal.IsValidOverride(this) is bool Override) {
             return Override;
         }
@@ -101,7 +95,7 @@ public class GoapAgent(object? Name = null) {
     /// <summary>
     /// Returns true if the action is valid for this agent with the given states.
     /// </summary>
-    public bool IsActionValid(GoapAction Action, IDictionary<object, object?> States) {
+    public bool IsActionValid(GoapAction Action, IDictionary<object, double> States) {
         if (Action.IsValidOverride(this) is bool Override) {
             return Override;
         }
@@ -120,7 +114,7 @@ public class GoapAgent(object? Name = null) {
     /// <summary>
     /// Returns the valid goals for this agent with the given states.
     /// </summary>
-    public IEnumerable<GoapGoal> GetValidGoals(IDictionary<object, object?> States) {
+    public IEnumerable<GoapGoal> GetValidGoals(IDictionary<object, double> States) {
         return Goals.Where(Goal => IsGoalValid(Goal, States));
     }
     /// <summary>
@@ -133,7 +127,7 @@ public class GoapAgent(object? Name = null) {
     /// <summary>
     /// Returns the valid actions for this agent with the given states.
     /// </summary>
-    public IEnumerable<GoapAction> GetValidActions(IDictionary<object, object?> States) {
+    public IEnumerable<GoapAction> GetValidActions(IDictionary<object, double> States) {
         return Actions.Where(Action => IsActionValid(Action, States));
     }
     /// <summary>

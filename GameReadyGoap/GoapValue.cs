@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
 
 namespace GameReadyGoap;
 
@@ -10,32 +9,12 @@ public abstract class GoapValue {
     /// <summary>
     /// Returns the final value to be used.
     /// </summary>
-    public abstract object? Evaluate(IDictionary<object, object?> States);
+    public abstract double Evaluate(IDictionary<object, double> States);
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public static implicit operator GoapValue(bool Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(sbyte Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(byte Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(short Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(ushort Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(int Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(uint Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(long Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(ulong Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(Int128 Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(UInt128 Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(BigInteger Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(Half Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(float Value) => new GoapConstantValue(Value);
+    /// <summary>
+    /// Constructs a <see cref="GoapConstantValue"/> from a <see cref="double"/>.
+    /// </summary>
     public static implicit operator GoapValue(double Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(decimal Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(string Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(char Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(DateTime Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(DateTimeOffset Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(TimeSpan Value) => new GoapConstantValue(Value);
-    public static implicit operator GoapValue(Guid Value) => new GoapConstantValue(Value);
-#pragma warning restore CS1591
 }
 /// <summary>
 /// The value of a constant.
@@ -44,19 +23,19 @@ public class GoapConstantValue() : GoapValue {
     /// <summary>
     /// The constant value.
     /// </summary>
-    public required object? Value { get; set; }
+    public required double Value { get; set; }
 
     /// <summary>
     /// Constructs a <see cref="GoapConstantValue"/> in-line.
     /// </summary>
     [SetsRequiredMembers]
-    public GoapConstantValue(object? Value) : this() {
+    public GoapConstantValue(double Value) : this() {
         this.Value = Value;
     }
     /// <summary>
     /// Returns the constant value.
     /// </summary>
-    public override object? Evaluate(IDictionary<object, object?> States) {
+    public override double Evaluate(IDictionary<object, double> States) {
         return Value;
     }
 }
@@ -79,7 +58,7 @@ public class GoapStateValue() : GoapValue {
     /// <summary>
     /// Returns the state value.
     /// </summary>
-    public override object? Evaluate(IDictionary<object, object?> States) {
+    public override double Evaluate(IDictionary<object, double> States) {
         return States.GetValueOrDefault(State);
     }
 }
@@ -112,7 +91,7 @@ public class GoapStateOperationValue() : GoapValue {
     /// <summary>
     /// Returns the state value after the operation.
     /// </summary>
-    public override object? Evaluate(IDictionary<object, object?> States) {
+    public override double Evaluate(IDictionary<object, double> States) {
         return Operation.Operate(States.GetValueOrDefault(State), Operand.Evaluate(States));
     }
 }
@@ -123,19 +102,19 @@ public class GoapDynamicValue() : GoapValue {
     /// <summary>
     /// The function that returns the value.
     /// </summary>
-    public required Func<object?> GetValue { get; set; }
+    public required Func<double> GetValue { get; set; }
 
     /// <summary>
     /// Constructs a <see cref="GoapDynamicValue"/> in-line.
     /// </summary>
     [SetsRequiredMembers]
-    public GoapDynamicValue(Func<object?> GetValue) : this() {
+    public GoapDynamicValue(Func<double> GetValue) : this() {
         this.GetValue = GetValue;
     }
     /// <summary>
     /// Returns the state value after the operation.
     /// </summary>
-    public override object? Evaluate(IDictionary<object, object?> States) {
+    public override double Evaluate(IDictionary<object, double> States) {
         return GetValue();
     }
 }

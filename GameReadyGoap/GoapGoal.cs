@@ -36,13 +36,13 @@ public class GoapGoal(object? Name = null) {
     /// <summary>
     /// Returns true if the goal is reached with the given states.
     /// </summary>
-    public bool IsReached(IDictionary<object, object?> States) {
+    public bool IsReached(IDictionary<object, double> States) {
         return Objectives.All(Objective => Objective.IsMet(States));
     }
     /// <summary>
     /// Returns true if the goal is reached with the given states, or closer to being reached than with the previous states.
     /// </summary>
-    public bool IsReachedWithBestEffort(IDictionary<object, object?> States, IDictionary<object, object?> PreviousStates) {
+    public bool IsReachedWithBestEffort(IDictionary<object, double> States, IDictionary<object, double> PreviousStates) {
         return Objectives.All(Objective => Objective.IsMetOrCloser(States, PreviousStates));
     }
 }

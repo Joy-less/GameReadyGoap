@@ -6,7 +6,7 @@ namespace GameReadyGoap;
 internal sealed class GoapStep {
     public required GoapStep? Previous;
     public required GoapAction? Action;
-    public required Dictionary<object, object?> PredictedStates;
+    public required Dictionary<object, double> PredictedStates;
     public required double TotalCost;
     public required int TotalSteps;
 

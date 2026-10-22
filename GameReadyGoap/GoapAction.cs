@@ -45,7 +45,7 @@ public class GoapAction(object? Name = null) {
     /// <summary>
     /// Changes the given states by the effects of the action.
     /// </summary>
-    public void UpdateStates(IDictionary<object, object?> States) {
+    public void UpdateStates(IDictionary<object, double> States) {
         foreach (GoapEffect Effect in Effects) {
             States[Effect.State] = Effect.PredictState(States);
         }
@@ -53,8 +53,8 @@ public class GoapAction(object? Name = null) {
     /// <summary>
     /// Gets the predicted states after the action is performed.
     /// </summary>
-    public Dictionary<object, object?> PredictStates(IDictionary<object, object?> States) {
-        Dictionary<object, object?> PredictedStates = new(States);
+    public Dictionary<object, double> PredictStates(IDictionary<object, double> States) {
+        Dictionary<object, double> PredictedStates = new(States);
         UpdateStates(PredictedStates);
         return PredictedStates;
     }
