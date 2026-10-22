@@ -16,7 +16,6 @@
     <Description>An easy-to-use implementation of Goal-Oriented Action Planning.</Description>
     <PackageProjectUrl>https://github.com/Joy-less/GameReadyGoap</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Joy-less/GameReadyGoap</RepositoryUrl>
-    <PackageIcon>Icon.jpg</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>GOAP, AI, plan</PackageTags>
     <Authors>Joyless</Authors>
@@ -28,10 +27,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="../Assets/Icon.jpg">
-      <Pack>True</Pack>
-      <PackagePath>/</PackagePath>
-    </None>
     <None Include="../README.md">
       <Pack>True</Pack>
       <PackagePath>/</PackagePath>
